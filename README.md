@@ -1,27 +1,47 @@
 # CivicLens
 
+**Transparencia en la contratación pública, impulsada por IA.**  
 **AI-powered transparency for public procurement.**
 
-CivicLens monitors government contracts and public spending to detect corruption risks. It ingests data from sources like PLACSP, TED, and DatosGob, uses large language models to score risk and generate summaries, and presents insights through an intuitive bilingual web interface (English & Spanish).
+CivicLens is a **free, open-source** civic technology platform that monitors government contracts and public spending to **surface and highlight potential anomalies and irregularities**. It ingests data from sources like PLACE, TED, and DatosGob, uses large language models to score risk and generate plain-language summaries, and presents insights through a bilingual web interface (Spanish default, English available).
+
+> **Disclaimer:** CivicLens is an **informational tool only**. Flagged anomalies are statistical and pattern-based indicators; they do not constitute accusations of wrongdoing or legal conclusions. Users should consult qualified professionals before acting on any finding. This platform does not provide legal advice.
+
+---
+
+## Open Source & Free to Use
+
+CivicLens is completely **free** and open-source under the MIT License. If you find it valuable, you can support the project through **voluntary donations** to help cover infrastructure and development costs.
+
+<!-- TODO: add donation link (e.g. Open Collective, GitHub Sponsors) once set up -->
 
 ---
 
 ## Features
 
 - 📜 **Contract Monitoring** — Browse and search public procurement contracts with AI-generated risk analysis
-- ⚠️ **Risk Alerts** — Receive alerts on suspicious patterns in government spending
-- 🤖 **AI Summaries** — Complex procurement data translated into plain language (English & Spanish)
+- ⚠️ **Anomaly Alerts** — Automatic detection of suspicious patterns: split contracts, anomalous pricing, sole-source awards, short tender windows, and more
+- ⚖️ **Legal Context Agent** — An AI agent grounded in current Spanish and EU procurement law (LCSP 9/2017, EU Directives 2014/23–25/EU) that contextualizes each flagged anomaly with the relevant legal framework
+- 🤖 **AI Summaries** — Complex procurement data translated into plain language (Spanish & English)
 - 🔍 **Search & Filter** — Find contracts by agency, amount, risk score, and more
 - 📊 **Analytics Dashboard** — Visualize trends in public procurement activity
 - 🏛️ **Organization Profiles** — Track government bodies at national, regional, and local levels
-- 🌐 **Bilingual (EN/ES)** — Full English and Spanish support throughout the interface
+- 🌐 **Bilingual (ES/EN)** — Spanish is the default language; full English support also available
 
 ## Architecture
 
 ```
 Frontend (Next.js)  →  Backend API (FastAPI)  →  PostgreSQL
                               ↓
-                       AI Pipeline (OpenAI)
+                    ┌─────────────────────┐
+                    │    AI Pipeline       │
+                    │  ┌───────────────┐  │
+                    │  │ Anomaly Engine │  │  ← pattern scoring
+                    │  └───────────────┘  │
+                    │  ┌───────────────┐  │
+                    │  │  Legal Agent  │  │  ← LCSP / EU law RAG
+                    │  └───────────────┘  │
+                    └─────────────────────┘
                               ↓
                         Redis (Cache/Queue)
 ```
@@ -31,7 +51,8 @@ Frontend (Next.js)  →  Backend API (FastAPI)  →  PostgreSQL
 | Frontend | Next.js 14+, TypeScript, Tailwind CSS, shadcn/ui |
 | Backend | Python 3.12+, FastAPI, SQLAlchemy 2.x, Pydantic v2 |
 | Database | PostgreSQL 16, Redis |
-| AI | OpenAI API, LangChain |
+| AI – Anomaly Engine | OpenAI API, LangChain (pattern scoring & risk analysis) |
+| AI – Legal Agent | RAG over LCSP 9/2017 + EU Directives, OpenAI API |
 | Hosting | GitHub Pages (frontend), Docker (backend) |
 | Infrastructure | Docker, GitHub Actions CI/CD |
 
@@ -113,6 +134,8 @@ civiclens/
 │   │   ├── schemas/   # Pydantic schemas
 │   │   ├── services/  # Business logic
 │   │   └── ai/        # LLM pipeline code
+│   │       ├── anomaly/   # Anomaly detection & scoring engine
+│   │       └── legal/     # Legal context agent (LCSP / EU law RAG)
 │   └── tests/
 ├── frontend/          # Next.js application
 │   └── src/
@@ -149,4 +172,4 @@ civiclens/
 
 ## License
 
-This project is licensed under the MIT License. A `LICENSE` file will be added to the repository.
+This project is licensed under the **MIT License**. A `LICENSE` file will be added to the repository.

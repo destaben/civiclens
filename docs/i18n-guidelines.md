@@ -1,6 +1,8 @@
 # Internationalization (i18n) Guidelines
 
-CivicLens supports **English** and **Spanish**. All user-facing text must be translatable.
+CivicLens supports **Spanish** (default) and **English**. All user-facing text must be translatable.
+
+> **Language policy:** Spanish is the default and primary language of the web interface. English is a fully supported secondary language. All code, comments, documentation, and commit messages are written in **English**.
 
 ---
 
@@ -8,8 +10,8 @@ CivicLens supports **English** and **Spanish**. All user-facing text must be tra
 
 | Code | Language | Default |
 |------|----------|---------|
-| `en` | English  | ✅       |
-| `es` | Spanish  | —       |
+| `es` | Spanish  | ✅       |
+| `en` | English  | —       |
 
 ---
 
@@ -20,6 +22,7 @@ CivicLens supports **English** and **Spanish**. All user-facing text must be tra
 | Translation library | `next-intl` |
 | Routing | App Router `[locale]` dynamic segment |
 | Translation files | JSON in `frontend/messages/` |
+| Default locale | `es` (Spanish) |
 | Date/number formatting | `Intl.DateTimeFormat`, `Intl.NumberFormat` |
 | Language persistence | Cookie (`NEXT_LOCALE`) |
 
@@ -173,7 +176,7 @@ Translation files use nested JSON organized by feature:
    <Link href="/contracts">...</Link>
    ```
 
-6. **Middleware** should detect locale from URL, cookie, or `Accept-Language` header and redirect accordingly. Note: Next.js Middleware requires a Node/Edge runtime and will **not** run on a purely static GitHub Pages deployment. For static export, use build-time generation with explicit `/en`/`/es` route segments instead of runtime middleware redirects.
+6. **Middleware** should detect locale from URL, cookie, or `Accept-Language` header and redirect accordingly. The default fallback locale is **`es`**. Note: Next.js Middleware requires a Node/Edge runtime and will **not** run on a purely static GitHub Pages deployment. For static export, use build-time generation with explicit `/es`/`/en` route segments instead of runtime middleware redirects.
 
 ### Adding New Text
 
@@ -197,6 +200,14 @@ Translation files use nested JSON organized by feature:
    ```tsx
    fetch(`/api/contracts/${id}/summary?locale=${locale}`)
    ```
+
+10. **Legal disclaimer text** — Every page that displays anomaly flags or risk scores must render the informational disclaimer. Add a `disclaimer` key to each locale's translation file:
+    ```json
+    // es.json
+    { "disclaimer": "Esta plataforma es una herramienta informativa. Los indicadores de riesgo no constituyen acusaciones ni conclusiones jurídicas. Consulte a un profesional cualificado antes de actuar sobre cualquier hallazgo." }
+    // en.json
+    { "disclaimer": "This platform is an informational tool only. Risk indicators are not accusations or legal conclusions. Consult a qualified professional before acting on any finding." }
+    ```
 
 10. The backend AI pipeline should include the target language in its LLM prompt.
 
