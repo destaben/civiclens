@@ -30,7 +30,8 @@ Frontend (Next.js)  →  Backend API (FastAPI)  →  PostgreSQL
 | Backend | Python 3.12+, FastAPI, SQLAlchemy 2.x, Pydantic v2 |
 | Database | PostgreSQL 16, Redis |
 | AI | OpenAI API, LangChain |
-| Infrastructure | Docker, GitHub Actions |
+| Hosting | GitHub Pages (frontend), Docker (backend) |
+| Infrastructure | Docker, GitHub Actions CI/CD |
 
 ## Getting Started
 
@@ -81,6 +82,18 @@ pytest
 cd frontend
 npm test
 ```
+
+### Deployment
+
+The frontend is deployed as a static site to **GitHub Pages** using Next.js static export (`output: 'export'`). A GitHub Actions workflow builds and deploys on push to `main`.
+
+```bash
+# Build static export locally
+cd frontend
+npm run build   # outputs to frontend/out/
+```
+
+The backend API is deployed separately via Docker.
 
 ## Project Structure
 

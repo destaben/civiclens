@@ -22,7 +22,7 @@ CivicLens is a civic technology platform that uses AI to make government regulat
 - **Backend**: Python 3.12+, FastAPI, SQLAlchemy 2.x, Pydantic v2
 - **Database**: PostgreSQL 16, Redis for caching/queues
 - **AI Pipeline**: OpenAI API, LangChain for orchestration
-- **Infrastructure**: Docker, GitHub Actions CI/CD
+- **Infrastructure**: Docker, GitHub Actions CI/CD, GitHub Pages (frontend hosting)
 
 ## Coding Conventions
 
