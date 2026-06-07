@@ -100,27 +100,22 @@ export async function fetchSourceMetadata(
   error?: string;
 }> {
   try {
-    const controller = new AbortController();
-    const timeoutHandle = setTimeout(() => controller.abort(), timeout);
+    // Use Promise.race with a timeout promise instead of AbortController
+    // for better test environment compatibility
+    const timeoutPromise = new Promise<Response>((_, reject) => {
+      setTimeout(() => reject(new Error('Request timeout')), timeout);
+    });
 
-    try {
-      const response = await fetch(url, {
-        method: 'HEAD',
-        signal: controller.signal,
-      });
+    const fetchPromise = fetch(url, { method: 'HEAD' });
 
-      clearTimeout(timeoutHandle);
+    const response = await Promise.race([fetchPromise, timeoutPromise]);
 
-      return {
-        success: response.ok,
-        statusCode: response.status,
-        contentType: response.headers.get('content-type') || undefined,
-        size: parseInt(response.headers.get('content-length') || '0') || undefined,
-      };
-    } catch (e) {
-      clearTimeout(timeoutHandle);
-      throw e;
-    }
+    return {
+      success: response.ok,
+      statusCode: response.status,
+      contentType: response.headers.get('content-type') || undefined,
+      size: parseInt(response.headers.get('content-length') || '0') || undefined,
+    };
   } catch (error) {
     return {
       success: false,
@@ -144,44 +139,41 @@ export async function extractSourceData(
   error?: string;
 }> {
   try {
-    const controller = new AbortController();
-    const timeoutHandle = setTimeout(() => controller.abort(), timeout);
+    // Use Promise.race with a timeout promise instead of AbortController
+    const timeoutPromise = new Promise<Response>((_, reject) => {
+      setTimeout(() => reject(new Error('Request timeout')), timeout);
+    });
 
-    try {
-      const response = await fetch(url, { signal: controller.signal });
+    const fetchPromise = fetch(url);
 
-      clearTimeout(timeoutHandle);
+    const response = await Promise.race([fetchPromise, timeoutPromise]);
 
-      if (!response.ok) {
-        return {
-          success: false,
-          error: `HTTP ${response.status}: ${response.statusText}`,
-        };
-      }
+    if (!response.ok) {
+      return {
+        success: false,
+        error: `HTTP ${response.status}: ${response.statusText}`,
+      };
+    }
 
-      const contentType = response.headers.get('content-type') || undefined;
-      const text = await response.text();
+    const contentType = response.headers.get('content-type') || undefined;
+    const text = await response.text();
 
-      if (text.length > maxSize) {
-        return {
-          success: true,
-          content: text.substring(0, maxSize),
-          contentType,
-          size: text.length,
-          error: `Truncated to ${maxSize} bytes`,
-        };
-      }
-
+    if (text.length > maxSize) {
       return {
         success: true,
-        content: text,
+        content: text.substring(0, maxSize),
         contentType,
         size: text.length,
+        error: `Truncated to ${maxSize} bytes`,
       };
-    } catch (e) {
-      clearTimeout(timeoutHandle);
-      throw e;
     }
+
+    return {
+      success: true,
+      content: text,
+      contentType,
+      size: text.length,
+    };
   } catch (error) {
     return {
       success: false,
