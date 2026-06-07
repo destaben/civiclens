@@ -11,6 +11,28 @@ import fs from 'fs';
 import path from 'path';
 import { parseDataSources, type DataSource } from '@/lib/extract-sources';
 
+// Type definitions for domain values
+type ContractStatus = 'active' | 'awarded' | 'cancelled';
+type ProcedureType = 'open' | 'restricted' | 'negotiated' | 'direct';
+type AwardCriteria = 'lowest-price' | 'best-value';
+type AnomalyType = 'split-contract' | 'short-tender-window' | 'anomalous-pricing' | 'sole-source';
+
+interface MockContract {
+  id: string;
+  title: string;
+  entity: string;
+  amount: number;
+  currency: string;
+  date: string;
+  status: ContractStatus;
+  riskScore: number;
+  anomalies: AnomalyType[];
+  summary: string;
+  cpvCode: string;
+  procedure: ProcedureType;
+  awardCriteria: AwardCriteria;
+}
+
 describe('Data Extraction with Mock Data', () => {
   it('should parse and extract mock procurement data', () => {
     const mockContractData = {
@@ -22,13 +44,13 @@ describe('Data Extraction with Mock Data', () => {
           amount: 150000,
           currency: 'EUR',
           date: '2024-01-15',
-          status: 'awarded' as const,
+          status: 'awarded' as ContractStatus,
           riskScore: 45,
-          anomalies: [] as string[],
+          anomalies: [] as AnomalyType[],
           summary: 'Contrato de consultoría para modernización de sistemas',
           cpvCode: '72000000',
-          procedure: 'open' as const,
-          awardCriteria: 'best-value' as const,
+          procedure: 'open' as ProcedureType,
+          awardCriteria: 'best-value' as AwardCriteria,
         },
         {
           id: 'PLACSP-2024-002',
@@ -37,15 +59,15 @@ describe('Data Extraction with Mock Data', () => {
           amount: 250000,
           currency: 'EUR',
           date: '2024-01-20',
-          status: 'active' as const,
+          status: 'active' as ContractStatus,
           riskScore: 72,
-          anomalies: ['split-contract', 'anomalous-pricing'],
+          anomalies: ['split-contract', 'anomalous-pricing'] as AnomalyType[],
           summary: 'Mantenimiento de parques y espacios públicos',
           cpvCode: '71000000',
-          procedure: 'restricted' as const,
-          awardCriteria: 'lowest-price' as const,
+          procedure: 'restricted' as ProcedureType,
+          awardCriteria: 'lowest-price' as AwardCriteria,
         },
-      ],
+      ] as MockContract[],
     };
 
     const sampleDir = path.join('/tmp', 'sample-extracted-data');
@@ -232,8 +254,9 @@ Data saved to: ${sampleDir}`,
 
     // Verify structure
     const files = fs.readdirSync(sampleDir, { recursive: true });
-    const hasContracts = files.some((f: any) => f.includes('contracts'));
-    const hasReports = files.some((f: any) => f.includes('reports'));
+    const fileStrings = files.map((f: any) => String(f));
+    const hasContracts = fileStrings.some((f: string) => f.includes('contracts'));
+    const hasReports = fileStrings.some((f: string) => f.includes('reports'));
 
     expect(hasContracts).toBe(true);
     expect(hasReports).toBe(true);

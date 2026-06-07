@@ -10,6 +10,24 @@ export interface DataSource {
 }
 
 /**
+ * Table header keywords to exclude from source names
+ */
+const EXCLUDED_CELL_VALUES = new Set([
+  'URL',
+  'API',
+  'Source',
+  'Attribute',
+  'Detail',
+  'Formats',
+  'Operator',
+  'Coverage',
+  'Data types',
+  'Update frequency',
+  'Historical depth',
+  'Licence',
+]);
+
+/**
  * Parse the markdown content and extract data sources.
  * Looks for URLs in markdown tables and extracts source information.
  */
@@ -52,14 +70,14 @@ export function parseDataSources(markdownContent: string): DataSource[] {
       // Parse the row cells
       const cells = line.split('|').map(c => c.trim()).filter(c => c && !c.includes('---'));
 
-      // Find the name - usually the first non-URL cell that isn't **URL** or **API**
+      // Find the name - usually the first non-URL cell that isn't in excluded values
       let name = '';
       for (const cell of cells) {
         const cleaned = cell.replace(/^\*+/, '').replace(/\*+$/, '').trim();
         if (
           !cleaned.startsWith('http') &&
           cleaned.length > 2 &&
-          !['URL', 'API', 'Source', 'Attribute', 'Detail', 'Formats', 'Operator', 'Coverage', 'Data types', 'Update frequency', 'Historical depth', 'Licence'].includes(cleaned)
+          !EXCLUDED_CELL_VALUES.has(cleaned)
         ) {
           name = cleaned;
           break;
@@ -114,7 +132,7 @@ export async function fetchSourceMetadata(
       success: response.ok,
       statusCode: response.status,
       contentType: response.headers.get('content-type') || undefined,
-      size: parseInt(response.headers.get('content-length') || '0') || undefined,
+      size: response.headers.get('content-length') ? parseInt(response.headers.get('content-length')!, 10) : undefined,
     };
   } catch (error) {
     return {

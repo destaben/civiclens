@@ -13,16 +13,19 @@ import fs from 'fs';
 import path from 'path';
 import { parseDataSources, fetchSourceMetadata, extractSourceData, type DataSource } from '@/lib/extract-sources';
 
+const MAX_SOURCES_TO_TEST = 10;
+
 describe('Data Source Extraction from Spanish Transparency Portals', () => {
   let sources: DataSource[] = [];
   let docsPath = '';
 
   beforeAll(() => {
-    // Find the markdown file
+    // Find the markdown file - try multiple paths for cross-environment compatibility
     const possiblePaths = [
       path.join(process.cwd(), '../docs/data-sources-spain.md'),
-      '/tmp/workspace/destaben/civiclens/docs/data-sources-spain.md',
       path.join(process.cwd(), '../../docs/data-sources-spain.md'),
+      path.resolve(__dirname, '../../docs/data-sources-spain.md'),
+      path.resolve(__dirname, '../../../docs/data-sources-spain.md'),
     ];
 
     for (const p of possiblePaths) {
@@ -104,7 +107,7 @@ describe('Data Source Extraction from Spanish Transparency Portals', () => {
       error?: string;
     }> = [];
 
-    const testSubset = sources.slice(0, Math.min(10, sources.length)); // Test first 10 to save time
+    const testSubset = sources.slice(0, Math.min(MAX_SOURCES_TO_TEST, sources.length)); // Test first 10 to save time
 
     for (const source of testSubset) {
       // Small delay to be respectful to servers
