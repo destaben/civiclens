@@ -5,18 +5,24 @@
 import { useEffect, useMemo, useState } from 'react';
 import { navigate } from '@/lib/router';
 import { fetchContracts } from '@/lib/data';
-import { formatCurrency, formatDate } from '@/lib/format';
-import { Badge, ANOMALY_LABELS, STATUS_LABELS } from '@/components/badge';
+import { formatCurrency, formatDate, formatNumber } from '@/lib/format';
+import { ANOMALY_LABELS, STATUS_LABELS } from '@/components/badge';
 import { DataTable } from '@/components/data-table';
 import type { ColumnDef } from '@/components/data-table';
 import type { AnomalyType, Contract, ContractStatus } from '@/types';
 import styles from './explore-page.module.css';
 
-/** Risk score display with colour coding. */
-function RiskBadge({ score }: { score: number }) {
-  const variant =
-    score >= 75 ? 'critical' : score >= 50 ? 'high' : score >= 25 ? 'medium' : 'low';
-  return <Badge variant={variant}>{score}</Badge>;
+function statusClass(status: ContractStatus): string {
+  if (status === 'active') return styles['status--active'];
+  if (status === 'awarded') return styles['status--awarded'];
+  return styles['status--cancelled'];
+}
+
+function riskTone(score: number): string {
+  if (score >= 75) return styles['risk--critical'];
+  if (score >= 50) return styles['risk--high'];
+  if (score >= 25) return styles['risk--medium'];
+  return styles['risk--low'];
 }
 
 const COLUMNS: ColumnDef<Contract>[] = [
@@ -49,28 +55,26 @@ const COLUMNS: ColumnDef<Contract>[] = [
     key: 'status',
     header: 'Estado',
     render: (c) => (
-      <Badge variant={c.status}>{STATUS_LABELS[c.status]}</Badge>
+      <span className={`${styles.status} ${statusClass(c.status)}`}>{STATUS_LABELS[c.status]}</span>
     ),
   },
   {
     key: 'riskScore',
     header: 'Riesgo',
-    render: (c) => <RiskBadge score={c.riskScore} />,
+    render: (c) => (
+      <span className={`${styles.risk} ${riskTone(c.riskScore)}`}>{c.riskScore}</span>
+    ),
     className: styles['col--center'],
   },
   {
     key: 'anomalies',
     header: 'Anomalías',
     render: (c) => (
-      <div className={styles.anomalies}>
+      <div className={styles.anomalyText}>
         {c.anomalies.length === 0 ? (
           <span className="text-subtle">—</span>
         ) : (
-          c.anomalies.map((a) => (
-            <Badge key={a} variant={a}>
-              {ANOMALY_LABELS[a]}
-            </Badge>
-          ))
+          c.anomalies.map((a) => ANOMALY_LABELS[a]).join(' · ')
         )}
       </div>
     ),
@@ -109,6 +113,15 @@ export function ExplorePage() {
     });
   }, [contracts, search, statusFilter, minRisk]);
 
+  const summary = useMemo(() => {
+    const spend = filtered.reduce((acc, c) => acc + c.amount, 0);
+    const highRisk = filtered.filter((c) => c.riskScore >= 75).length;
+    return {
+      spend,
+      highRisk,
+    };
+  }, [filtered]);
+
   function handleRowClick(contract: Contract) {
     navigate(`/contract/${contract.id}`);
   }
@@ -118,6 +131,7 @@ export function ExplorePage() {
       <div className="container">
         <header className={styles.header}>
           <div>
+            <p className="eyebrow">Busqueda avanzada</p>
             <h1 className={styles.title}>Explorar contratos</h1>
             <p className="text-muted">
               {loading
@@ -125,6 +139,19 @@ export function ExplorePage() {
                 : `${filtered.length} contrato${filtered.length !== 1 ? 's' : ''} encontrado${filtered.length !== 1 ? 's' : ''}`}
             </p>
           </div>
+
+          {!loading && (
+            <div className={styles.quickStats}>
+              <div className={styles.quickStat}>
+                <span>Gasto filtrado</span>
+                <strong>{formatCurrency(summary.spend)}</strong>
+              </div>
+              <div className={styles.quickStat}>
+                <span>Riesgo alto</span>
+                <strong>{formatNumber(summary.highRisk)}</strong>
+              </div>
+            </div>
+          )}
         </header>
 
         {/* Filters */}
@@ -206,9 +233,7 @@ export function ExplorePage() {
           <p className={styles.legend__title}>Tipos de anomalía</p>
           <ul className={styles.legend__list} role="list">
             {(Object.entries(ANOMALY_LABELS) as [AnomalyType, string][]).map(([key, label]) => (
-              <li key={key}>
-                <Badge variant={key}>{label}</Badge>
-              </li>
+              <li key={key} className={styles.legend__item}>{label}</li>
             ))}
           </ul>
         </aside>

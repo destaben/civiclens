@@ -7,7 +7,7 @@
 
 import type { Contract, Organization, Stats } from '@/types';
 
-const BASE = '/data';
+const BASE = `${import.meta.env.BASE_URL}data`;
 
 /**
  * Fetches a JSON file from the public /data directory and returns it typed.

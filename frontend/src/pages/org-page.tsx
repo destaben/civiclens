@@ -6,12 +6,25 @@ import React, { useEffect, useState } from 'react';
 import { navigate } from '@/lib/router';
 import { fetchOrganization, fetchContracts } from '@/lib/data';
 import { formatCurrency, formatNumber } from '@/lib/format';
-import { Badge, ORG_LEVEL_LABELS, STATUS_LABELS } from '@/components/badge';
+import { ORG_LEVEL_LABELS, STATUS_LABELS } from '@/components/badge';
 import { DataTable } from '@/components/data-table';
 import type { ColumnDef } from '@/components/data-table';
 import { StatsCounter } from '@/components/stats-counter';
 import type { Contract, Organization } from '@/types';
 import styles from './org-page.module.css';
+
+function statusClass(status: Contract['status']): string {
+  if (status === 'active') return styles['status--active'];
+  if (status === 'awarded') return styles['status--awarded'];
+  return styles['status--cancelled'];
+}
+
+function riskClass(score: number): string {
+  if (score >= 75) return styles['risk--critical'];
+  if (score >= 50) return styles['risk--high'];
+  if (score >= 25) return styles['risk--medium'];
+  return styles['risk--low'];
+}
 
 export interface OrgPageProps {
   /** Organisation ID from the URL parameter */
@@ -39,16 +52,14 @@ const CONTRACT_COLUMNS: ColumnDef<Contract>[] = [
     key: 'status',
     header: 'Estado',
     render: (c) => (
-      <Badge variant={c.status}>{STATUS_LABELS[c.status]}</Badge>
+      <span className={`${styles.status} ${statusClass(c.status)}`}>{STATUS_LABELS[c.status]}</span>
     ),
   },
   {
     key: 'riskScore',
     header: 'Riesgo',
     render: (c) => {
-      const variant =
-        c.riskScore >= 75 ? 'critical' : c.riskScore >= 50 ? 'high' : c.riskScore >= 25 ? 'medium' : 'low';
-      return <Badge variant={variant}>{c.riskScore}</Badge>;
+      return <span className={`${styles.risk} ${riskClass(c.riskScore)}`}>{c.riskScore}</span>;
     },
     className: styles['col--center'],
   },
@@ -143,7 +154,7 @@ export function OrgPage({ orgId }: OrgPageProps) {
 
         {/* Header */}
         <header className={styles.header}>
-          <Badge variant={org.level}>{ORG_LEVEL_LABELS[org.level]}</Badge>
+          <p className={styles.level}>{ORG_LEVEL_LABELS[org.level]}</p>
           <h1 className={styles.title}>{org.name}</h1>
           <p className={styles.type}>{org.type}</p>
         </header>

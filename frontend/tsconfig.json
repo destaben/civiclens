@@ -24,10 +24,8 @@
     "types": ["vitest/globals"],
 
     /* Path aliases */
-    "ignoreDeprecations": "6.0",
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src"],

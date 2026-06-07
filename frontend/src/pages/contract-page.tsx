@@ -1,5 +1,5 @@
 /**
- * Contract detail page — full information for a single contract plus its alerts.
+ * Contract detail page — full information for a single contract.
  */
 
 import React, { useEffect, useState } from 'react';
@@ -7,7 +7,6 @@ import { navigate } from '@/lib/router';
 import { fetchContract } from '@/lib/data';
 import { formatCurrency, formatDate } from '@/lib/format';
 import {
-  Badge,
   ANOMALY_LABELS,
   STATUS_LABELS,
 } from '@/components/badge';
@@ -30,7 +29,7 @@ function DetailRow({ label, children }: { label: string; children: React.ReactNo
 }
 
 /**
- * Contract detail page showing full contract information and related alerts.
+ * Contract detail page showing full contract information.
  */
 export function ContractPage({ contractId }: ContractPageProps) {
   const [contract, setContract] = useState<Contract | null>(null);
@@ -103,6 +102,15 @@ export function ContractPage({ contractId }: ContractPageProps) {
           ? 'medium'
           : 'low';
 
+  const riskLabel =
+    riskVariant === 'critical'
+      ? 'Crítico'
+      : riskVariant === 'high'
+        ? 'Alto'
+        : riskVariant === 'medium'
+          ? 'Medio'
+          : 'Bajo';
+
   const PROCEDURE_LABELS: Record<ProcedureType, string> = {
     open: 'Abierto',
     restricted: 'Restringido',
@@ -130,8 +138,12 @@ export function ContractPage({ contractId }: ContractPageProps) {
         {/* Header */}
         <header className={styles.header}>
           <div className={styles.header__badges}>
-            <Badge variant={contract.status}>{STATUS_LABELS[contract.status]}</Badge>
-            <Badge variant={riskVariant}>Riesgo: {contract.riskScore}/100</Badge>
+            <span className={`${styles.status} ${styles[`status--${contract.status}`]}`}>
+              {STATUS_LABELS[contract.status]}
+            </span>
+            <span className={`${styles.risk} ${styles[`risk--${riskVariant}`]}`}>
+              Riesgo {riskLabel} · {contract.riskScore}/100
+            </span>
           </div>
           <h1 className={styles.title}>{contract.title}</h1>
           <p className={styles.entity}>{contract.entity}</p>
@@ -170,11 +182,7 @@ export function ContractPage({ contractId }: ContractPageProps) {
                 <span className="text-muted">Ninguna</span>
               ) : (
                 <div className={styles.anomalies}>
-                  {contract.anomalies.map((a) => (
-                    <Badge key={a} variant={a}>
-                      {ANOMALY_LABELS[a]}
-                    </Badge>
-                  ))}
+                  {contract.anomalies.map((a) => ANOMALY_LABELS[a]).join(' · ')}
                 </div>
               )}
             </DetailRow>

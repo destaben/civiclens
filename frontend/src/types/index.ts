@@ -42,18 +42,6 @@ export interface Contract {
   awardCriteria: AwardCriteria;
 }
 
-/** An anomaly alert linked to a contract */
-export interface Alert {
-  id: string;
-  contractId: string;
-  contractTitle: string;
-  type: AnomalyType;
-  severity: Severity;
-  date: string;
-  description: string;
-  legalReference: string;
-  status: AlertStatus;
-}
 
 /** A public-sector organisation */
 export interface Organization {
@@ -75,6 +63,6 @@ export interface Stats {
   openAlerts: number;
   avgRiskScore: number;
   contractsByStatus: Record<ContractStatus, number>;
-  alertsBySeverity: Record<Severity, number>;
+
   topAnomalyTypes: Array<{ type: AnomalyType; count: number }>;
 }

@@ -4,9 +4,11 @@ import { resolve } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
+const base = process.env.VITE_BASE_PATH ?? '/';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base,
   plugins: [react()],
   resolve: {
     alias: {

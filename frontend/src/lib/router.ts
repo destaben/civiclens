@@ -18,6 +18,34 @@ interface Route {
   handler: RouteHandler;
 }
 
+/** Base path used by Vite during build (e.g. `/repo-name/` on GitHub Pages). */
+const BASE_PATH = (() => {
+  const baseUrl = import.meta.env.BASE_URL || '/';
+  if (baseUrl === '/') {
+    return '';
+  }
+  return baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+})();
+
+/** Adds the configured base path to an app-relative path. */
+function withBase(path: string): string {
+  if (!BASE_PATH) {
+    return path;
+  }
+  return `${BASE_PATH}${path.startsWith('/') ? path : `/${path}`}`;
+}
+
+/** Removes the configured base path from a browser pathname for route matching. */
+function stripBase(path: string): string {
+  if (!BASE_PATH) {
+    return path || '/';
+  }
+  if (path.startsWith(BASE_PATH)) {
+    return path.slice(BASE_PATH.length) || '/';
+  }
+  return path || '/';
+}
+
 /**
  * Converts a route pattern string such as `/contract/:id` into a RegExp
  * and returns the named parameter list alongside it.
@@ -101,7 +129,7 @@ export function setNotFound(handler: RouteHandler): void {
 
 /** Returns the current pathname (without query string or hash). */
 function currentPath(): string {
-  return window.location.pathname || '/';
+  return stripBase(window.location.pathname || '/');
 }
 
 /** Match the given path against registered routes and invoke the handler. */
@@ -126,7 +154,7 @@ function dispatch(path: string): void {
  * @param path - The target pathname, e.g. `/explore`
  */
 export function navigate(path: string): void {
-  window.history.pushState(null, '', path);
+  window.history.pushState(null, '', withBase(path));
   dispatch(path);
 }
 

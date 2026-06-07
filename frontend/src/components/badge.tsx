@@ -6,8 +6,10 @@
  */
 
 import React from 'react';
-import type { AlertStatus, AnomalyType, ContractStatus, OrgLevel, Severity } from '@/types';
+import type { AnomalyType, ContractStatus, OrgLevel } from '@/types';
 import styles from './badge.module.css';
+
+export type Severity = 'critical' | 'high' | 'medium' | 'low';
 
 /** Supported badge variants */
 export type BadgeVariant =
@@ -48,13 +50,6 @@ export const STATUS_LABELS: Record<ContractStatus, string> = {
   active: 'Activo',
   awarded: 'Adjudicado',
   cancelled: 'Cancelado',
-};
-
-/** Human-readable labels for alert statuses */
-export const ALERT_STATUS_LABELS: Record<AlertStatus, string> = {
-  open: 'Abierta',
-  reviewing: 'En revisión',
-  resolved: 'Resuelta',
 };
 
 /** Human-readable labels for organisation levels */

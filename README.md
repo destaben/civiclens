@@ -131,13 +131,36 @@ pytest
 
 ### Deployment
 
-**Frontend:** The Vite static build is deployed to **GitHub Pages** via GitHub Actions. On push to `main`, a workflow builds the project and deploys the `dist/` folder.
+**Frontend:** The Vite static build is deployed to **GitHub Pages** via GitHub Actions.
 
 ```bash
 # Build locally for deployment
 cd frontend
 npm run build   # outputs to dist/
 ```
+
+#### GitHub Pages setup (one-time)
+
+1. Push this repository to GitHub.
+2. In GitHub, go to **Settings → Pages**.
+3. Under **Build and deployment**, set **Source** to `GitHub Actions`.
+4. Push to `main` (or run the `Deploy Frontend to GitHub Pages` workflow manually).
+
+The workflow file is at `.github/workflows/deploy-pages.yml` and will:
+
+- install frontend dependencies
+- build the app with the correct base path for project pages
+- upload `frontend/dist`
+- publish to GitHub Pages
+
+#### Public URL
+
+- Project pages: `https://<github-username>.github.io/<repo-name>/`
+- If you later use a custom domain, update the base path strategy accordingly.
+
+#### SPA routing note
+
+This project includes `dist/404.html` (copied from `index.html` during build) so direct links such as `/explore` or `/contract/CNT-2024-003` work on GitHub Pages.
 
 **Backend API:** Will be deployed separately via Docker.
 
