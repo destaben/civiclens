@@ -2,7 +2,15 @@
 
 ## Project Overview
 
-CivicLens is a civic technology platform that uses AI to make public procurement more transparent and accessible. The system ingests government contracts and public spending data, scores risk and generates summaries with LLMs, and presents insights through an intuitive bilingual web interface.
+CivicLens is a **free, open-source** civic technology platform that uses AI to make public procurement more transparent and accessible. The system ingests government contracts and public spending data, runs an **anomaly detection engine** to surface statistical irregularities and suspicious patterns, and provides a **Legal Context Agent** (RAG-based, grounded in LCSP 9/2017 and EU Directives 2014/23–25/EU) that contextualizes each flagged anomaly with the relevant legal framework. Insights are presented through a bilingual web interface with **Spanish as the default language**.
+
+> **Informational only.** CivicLens flags potential anomalies for public awareness. It does not accuse anyone of wrongdoing and does not provide legal advice. Every anomaly display must include the platform's disclaimer.
+
+**Open source · Free to use · Donations welcome**
+
+### Language policy
+- Web interface: **Spanish is the default locale** (`es`). English is fully supported.
+- All code, comments, documentation, tests, and commit messages: **English**.
 
 ## Architecture
 
@@ -12,16 +20,22 @@ CivicLens is a civic technology platform that uses AI to make public procurement
 │  (Next.js) │     │  (FastAPI)    │     │ (PostgreSQL)│
 └────────────┘     └───────────────┘     └────────────┘
                           │
-                   ┌──────┴──────┐
-                   │  AI/LLM     │
-                   │  Pipeline   │
-                   └─────────────┘
+               ┌──────────┴──────────┐
+               │     AI Pipeline     │
+               │  ┌───────────────┐  │
+               │  │Anomaly Engine │  │  ← pattern scoring
+               │  └───────────────┘  │
+               │  ┌───────────────┐  │
+               │  │ Legal Agent   │  │  ← LCSP/EU law RAG
+               │  └───────────────┘  │
+               └─────────────────────┘
 ```
 
-- **Frontend**: Next.js 14+ with TypeScript, Tailwind CSS, shadcn/ui
+- **Frontend**: Next.js 14+ with TypeScript, Tailwind CSS, shadcn/ui — Spanish default locale
 - **Backend**: Python 3.12+, FastAPI, SQLAlchemy 2.x, Pydantic v2
 - **Database**: PostgreSQL 16, Redis for caching/queues
-- **AI Pipeline**: OpenAI API, LangChain for orchestration
+- **AI – Anomaly Engine**: OpenAI API, LangChain for pattern scoring and risk analysis
+- **AI – Legal Agent**: RAG over LCSP 9/2017 + EU Directives 2014/23–25/EU, OpenAI API
 - **Infrastructure**: Docker, GitHub Actions CI/CD, GitHub Pages (frontend hosting)
 
 ## Coding Conventions
@@ -100,6 +114,8 @@ civiclens/
 │   │   ├── schemas/   # Pydantic schemas
 │   │   ├── services/  # Business logic
 │   │   └── ai/        # LLM pipeline code
+│   │       ├── anomaly/   # Anomaly detection & scoring engine
+│   │       └── legal/     # Legal context agent (LCSP / EU law RAG)
 │   ├── tests/
 │   ├── pyproject.toml
 │   └── Dockerfile
