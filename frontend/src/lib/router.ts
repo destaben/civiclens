@@ -51,10 +51,35 @@ function compileRoute(pattern: string): {
 /** Registered routes list. */
 const routes: Route[] = [];
 
-/** Fallback handler called when no route matches the current path. */
-let notFoundHandler: RouteHandler = () => {
+/** Default fallback handler. */
+function defaultNotFoundHandler() {
   console.warn('[router] No route matched for', currentPath());
-};
+}
+
+/** Fallback handler called when no route matches the current path. */
+let notFoundHandler: RouteHandler = defaultNotFoundHandler;
+
+/** Named popstate handler to enable idempotent start and clean teardown. */
+function onPopstate() {
+  dispatch(currentPath());
+}
+
+/** Whether the popstate listener has been registered. */
+let started = false;
+
+/**
+ * Reset all registered routes and restore the default not-found handler.
+ * Removes the popstate listener if it was registered.
+ * Call this before re-initialising the router (e.g. in tests or StrictMode remounts).
+ */
+export function resetRouter(): void {
+  routes.length = 0;
+  notFoundHandler = defaultNotFoundHandler;
+  if (started) {
+    window.removeEventListener('popstate', onPopstate);
+    started = false;
+  }
+}
 
 /**
  * Register a route pattern with a handler.
@@ -107,11 +132,13 @@ export function navigate(path: string): void {
 
 /**
  * Start the router: listen for popstate events and dispatch the current path.
- * Call this once during application bootstrap.
+ * Idempotent — the popstate listener is registered only once regardless of how
+ * many times this function is called.
  */
 export function startRouter(): void {
-  window.addEventListener('popstate', () => {
-    dispatch(currentPath());
-  });
+  if (!started) {
+    started = true;
+    window.addEventListener('popstate', onPopstate);
+  }
   dispatch(currentPath());
 }

@@ -28,7 +28,7 @@ const COLUMNS: ColumnDef<Contract>[] = [
   {
     key: 'title',
     header: 'Título',
-    render: (c) => <span className={styles.title}>{c.title}</span>,
+    render: (c) => <span className={styles.contractTitle}>{c.title}</span>,
   },
   {
     key: 'entity',

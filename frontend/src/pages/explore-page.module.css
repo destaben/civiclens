@@ -71,7 +71,7 @@
   color: var(--color-text-muted);
 }
 
-.title {
+.contractTitle {
   font-weight: var(--font-weight-medium);
   max-width: 20rem;
 }

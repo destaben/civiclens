@@ -6,7 +6,7 @@
  */
 
 import React, { useCallback, useEffect, useState } from 'react';
-import { route, setNotFound, startRouter, navigate } from '@/lib/router';
+import { route, setNotFound, startRouter, navigate, resetRouter } from '@/lib/router';
 import { NavBar } from '@/components/nav-bar';
 import { HomePage } from '@/pages/home-page';
 import { ExplorePage } from '@/pages/explore-page';
@@ -36,6 +36,7 @@ export function App() {
   }, []);
 
   useEffect(() => {
+    resetRouter();
     route('/', () => updatePath({ page: 'home' }));
     route('/explore', () => updatePath({ page: 'explore' }));
     route('/alerts', () => updatePath({ page: 'alerts' }));

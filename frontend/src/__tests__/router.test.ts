@@ -1,8 +1,9 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { route, navigate, startRouter, setNotFound } from '@/lib/router';
+import { route, navigate, startRouter, setNotFound, resetRouter } from '@/lib/router';
 
 describe('router', () => {
   beforeEach(() => {
+    resetRouter();
     // Reset history to root
     window.history.pushState(null, '', '/');
   });
