@@ -135,7 +135,7 @@ export function OrgPage({ orgId }: OrgPageProps) {
         {/* Breadcrumb */}
         <nav aria-label="Navegación de ruta" className={styles.breadcrumb}>
           <a href="/explore" onClick={handleBack} className={styles.back}>
-            ← Inicio
+            ← Explorar
           </a>
           <span aria-hidden="true"> / </span>
           <span>{org.name}</span>

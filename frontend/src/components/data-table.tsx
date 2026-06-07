@@ -102,7 +102,6 @@ export function DataTable<TRow extends object>({
                       }
                     : undefined
                 }
-                role={isInteractive ? 'button' : undefined}
                 aria-label={isInteractive ? `Ver detalles de fila ${getRowKey(row)}` : undefined}
               >
                 {columns.map((col) => (

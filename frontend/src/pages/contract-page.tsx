@@ -11,7 +11,7 @@ import {
   ANOMALY_LABELS,
   STATUS_LABELS,
 } from '@/components/badge';
-import type { Contract } from '@/types';
+import type { Contract, ProcedureType, AwardCriteria } from '@/types';
 import styles from './contract-page.module.css';
 
 export interface ContractPageProps {
@@ -103,14 +103,14 @@ export function ContractPage({ contractId }: ContractPageProps) {
           ? 'medium'
           : 'low';
 
-  const PROCEDURE_LABELS: Record<string, string> = {
+  const PROCEDURE_LABELS: Record<ProcedureType, string> = {
     open: 'Abierto',
     restricted: 'Restringido',
     negotiated: 'Negociado',
     direct: 'Directo',
   };
 
-  const CRITERIA_LABELS: Record<string, string> = {
+  const CRITERIA_LABELS: Record<AwardCriteria, string> = {
     'lowest-price': 'Precio más bajo',
     'best-value': 'Mejor valor',
   };
