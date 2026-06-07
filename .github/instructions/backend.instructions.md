@@ -19,7 +19,7 @@ applyTo: "backend/**/*.py"
 
 ## Imports
 Order: stdlib → third-party → local, separated by blank lines.
-Use absolute imports (`from app.services.regulation import ...`).
+Use absolute imports (`from app.services.contract import ...`).
 
 ## Error Handling
 - Raise `HTTPException` with appropriate status codes in route handlers
