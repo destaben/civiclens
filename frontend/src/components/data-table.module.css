@@ -1,0 +1,67 @@
+.wrapper {
+  overflow-x: auto;
+  border: var(--border-width) solid rgb(79 70 229 / 0.16);
+  border-radius: var(--border-radius-2xl);
+  box-shadow: var(--shadow-md);
+  background-color: rgb(255 255 255 / 0.92);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+  background-color: var(--color-bg-card);
+}
+
+.th {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-primary-800);
+  background: linear-gradient(180deg, rgb(79 70 229 / 0.08), rgb(79 70 229 / 0.02));
+  border-bottom: var(--border-width) solid rgb(79 70 229 / 0.15);
+  white-space: nowrap;
+}
+
+.tr {
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.tr:last-child {
+  border-bottom: none;
+}
+
+.tr--clickable {
+  cursor: pointer;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.tr--clickable:hover {
+  background-color: rgb(79 70 229 / 0.06);
+  transform: scale(0.998);
+}
+
+.tr--clickable:focus-visible {
+  outline: var(--border-width-2) solid var(--color-primary-500);
+  outline-offset: -2px;
+}
+
+.td {
+  padding: var(--space-3) var(--space-4);
+  color: var(--color-text);
+  vertical-align: middle;
+}
+
+.td:first-child {
+  font-family: var(--font-family-mono);
+}
+
+.empty {
+  padding: var(--space-8) var(--space-4);
+  text-align: center;
+  color: var(--color-text-muted);
+  font-style: italic;
+}

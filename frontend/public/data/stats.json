@@ -1,0 +1,23 @@
+{
+  "totalContracts": 3389,
+  "totalSpend": 581800000,
+  "openAlerts": 82,
+  "avgRiskScore": 43,
+  "contractsByStatus": {
+    "active": 2140,
+    "awarded": 918,
+    "cancelled": 331
+  },
+  "alertsBySeverity": {
+    "critical": 12,
+    "high": 28,
+    "medium": 31,
+    "low": 11
+  },
+  "topAnomalyTypes": [
+    { "type": "split-contract", "count": 34 },
+    { "type": "short-tender-window", "count": 27 },
+    { "type": "anomalous-pricing", "count": 19 },
+    { "type": "sole-source", "count": 14 }
+  ]
+}

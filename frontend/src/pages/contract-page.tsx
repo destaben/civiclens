@@ -1,0 +1,203 @@
+/**
+ * Contract detail page — full information for a single contract.
+ */
+
+import React, { useEffect, useState } from 'react';
+import { navigate } from '@/lib/router';
+import { fetchContract } from '@/lib/data';
+import { formatCurrency, formatDate } from '@/lib/format';
+import {
+  ANOMALY_LABELS,
+  STATUS_LABELS,
+} from '@/components/badge';
+import type { Contract, ProcedureType, AwardCriteria } from '@/types';
+import styles from './contract-page.module.css';
+
+export interface ContractPageProps {
+  /** Contract ID from the URL parameter */
+  contractId: string;
+}
+
+/** Labelled detail row. */
+function DetailRow({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className={styles.detail}>
+      <dt className={styles.detail__label}>{label}</dt>
+      <dd className={styles.detail__value}>{children}</dd>
+    </div>
+  );
+}
+
+/**
+ * Contract detail page showing full contract information.
+ */
+export function ContractPage({ contractId }: ContractPageProps) {
+  const [contract, setContract] = useState<Contract | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setLoading(true);
+    fetchContract(contractId)
+      .then((contractData) => {
+        setContract(contractData);
+      })
+      .catch((err: unknown) => {
+        setError(err instanceof Error ? err.message : 'Error al cargar el contrato.');
+      })
+      .finally(() => setLoading(false));
+  }, [contractId]);
+
+  function handleBack(e: React.MouseEvent) {
+    e.preventDefault();
+    navigate('/explore');
+  }
+
+  if (loading) {
+    return (
+      <main className={styles.page}>
+        <div className="container">
+          <p className={styles.loading} role="status" aria-live="polite">
+            Cargando contrato…
+          </p>
+        </div>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className={styles.page}>
+        <div className="container">
+          <p className={styles.error} role="alert">{error}</p>
+          <a href="/explore" onClick={handleBack} className={styles.back}>
+            ← Volver a contratos
+          </a>
+        </div>
+      </main>
+    );
+  }
+
+  if (!contract) {
+    return (
+      <main className={styles.page}>
+        <div className="container">
+          <p className={styles.notFound} role="alert">
+            Contrato <code>{contractId}</code> no encontrado.
+          </p>
+          <a href="/explore" onClick={handleBack} className={styles.back}>
+            ← Volver a contratos
+          </a>
+        </div>
+      </main>
+    );
+  }
+
+  const riskVariant =
+    contract.riskScore >= 75
+      ? 'critical'
+      : contract.riskScore >= 50
+        ? 'high'
+        : contract.riskScore >= 25
+          ? 'medium'
+          : 'low';
+
+  const riskLabel =
+    riskVariant === 'critical'
+      ? 'Crítico'
+      : riskVariant === 'high'
+        ? 'Alto'
+        : riskVariant === 'medium'
+          ? 'Medio'
+          : 'Bajo';
+
+  const PROCEDURE_LABELS: Record<ProcedureType, string> = {
+    open: 'Abierto',
+    restricted: 'Restringido',
+    negotiated: 'Negociado',
+    direct: 'Directo',
+  };
+
+  const CRITERIA_LABELS: Record<AwardCriteria, string> = {
+    'lowest-price': 'Precio más bajo',
+    'best-value': 'Mejor valor',
+  };
+
+  return (
+    <main className={styles.page}>
+      <div className="container">
+        {/* Breadcrumb */}
+        <nav aria-label="Navegación de ruta" className={styles.breadcrumb}>
+          <a href="/explore" onClick={handleBack} className={styles.back}>
+            ← Contratos
+          </a>
+          <span aria-hidden="true"> / </span>
+          <span>{contract.id}</span>
+        </nav>
+
+        {/* Header */}
+        <header className={styles.header}>
+          <div className={styles.header__badges}>
+            <span className={`${styles.status} ${styles[`status--${contract.status}`]}`}>
+              {STATUS_LABELS[contract.status]}
+            </span>
+            <span className={`${styles.risk} ${styles[`risk--${riskVariant}`]}`}>
+              Riesgo {riskLabel} · {contract.riskScore}/100
+            </span>
+          </div>
+          <h1 className={styles.title}>{contract.title}</h1>
+          <p className={styles.entity}>{contract.entity}</p>
+        </header>
+
+        {/* Summary */}
+        {contract.summary && (
+          <section className={styles.summary} aria-labelledby="summary-heading">
+            <h2 id="summary-heading" className={styles.section__title}>
+              Resumen
+            </h2>
+            <p className={styles.summary__text}>{contract.summary}</p>
+          </section>
+        )}
+
+        {/* Details grid */}
+        <section className={styles.details} aria-labelledby="details-heading">
+          <h2 id="details-heading" className={styles.section__title}>
+            Detalles del contrato
+          </h2>
+          <dl className={styles.details__grid}>
+            <DetailRow label="ID">{contract.id}</DetailRow>
+            <DetailRow label="Importe">
+              {formatCurrency(contract.amount, contract.currency)}
+            </DetailRow>
+            <DetailRow label="Fecha">{formatDate(contract.date)}</DetailRow>
+            <DetailRow label="Código CPV">{contract.cpvCode}</DetailRow>
+            <DetailRow label="Procedimiento">
+              {PROCEDURE_LABELS[contract.procedure] ?? contract.procedure}
+            </DetailRow>
+            <DetailRow label="Criterio adjudicación">
+              {CRITERIA_LABELS[contract.awardCriteria] ?? contract.awardCriteria}
+            </DetailRow>
+            <DetailRow label="Anomalías detectadas">
+              {contract.anomalies.length === 0 ? (
+                <span className="text-muted">Ninguna</span>
+              ) : (
+                <div className={styles.anomalies}>
+                  {contract.anomalies.map((a) => ANOMALY_LABELS[a]).join(' · ')}
+                </div>
+              )}
+            </DetailRow>
+          </dl>
+        </section>
+
+
+        {/* Disclaimer */}
+        <aside className={styles.disclaimer} role="note">
+          <p>
+            <strong>⚠️ Aviso legal:</strong> Las anomalías detectadas son indicadores
+            estadísticos. No constituyen acusaciones ni asesoramiento jurídico.
+          </p>
+        </aside>
+      </div>
+    </main>
+  );
+}

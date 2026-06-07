@@ -69,7 +69,6 @@ Translation files use nested JSON organized by feature:
   "nav": {
     "home": "Home",
     "contracts": "Contracts",
-    "alerts": "Alerts",
     "organizations": "Organizations",
     "dashboard": "Dashboard"
   },
@@ -84,11 +83,6 @@ Translation files use nested JSON organized by feature:
     "riskScore": "Risk Score",
     "amount": "Amount",
     "agency": "Agency"
-  },
-  "alerts": {
-    "title": "Risk Alerts",
-    "noAlerts": "No active alerts",
-    "severity": "Severity"
   },
   "organizations": {
     "title": "Organizations",
@@ -112,7 +106,6 @@ Translation files use nested JSON organized by feature:
   "nav": {
     "home": "Inicio",
     "contracts": "Contratos",
-    "alerts": "Alertas",
     "organizations": "Organizaciones",
     "dashboard": "Panel"
   },
@@ -127,11 +120,6 @@ Translation files use nested JSON organized by feature:
     "riskScore": "Puntuación de riesgo",
     "amount": "Importe",
     "agency": "Organismo"
-  },
-  "alerts": {
-    "title": "Alertas de riesgo",
-    "noAlerts": "No hay alertas activas",
-    "severity": "Gravedad"
   },
   "organizations": {
     "title": "Organizaciones",
