@@ -14,12 +14,6 @@ export type ProcedureType = 'open' | 'restricted' | 'negotiated' | 'direct';
 /** Award criteria */
 export type AwardCriteria = 'lowest-price' | 'best-value';
 
-/** Alert severity level */
-export type Severity = 'critical' | 'high' | 'medium' | 'low';
-
-/** Alert status */
-export type AlertStatus = 'open' | 'reviewing' | 'resolved';
-
 /** Organisation tier */
 export type OrgLevel = 'national' | 'regional' | 'local';
 

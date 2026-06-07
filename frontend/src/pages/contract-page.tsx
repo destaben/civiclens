@@ -4,15 +4,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { navigate } from '@/lib/router';
-import { fetchContract, fetchAlertsForContract } from '@/lib/data';
+import { fetchContract } from '@/lib/data';
 import { formatCurrency, formatDate } from '@/lib/format';
 import {
   Badge,
   ANOMALY_LABELS,
   STATUS_LABELS,
 } from '@/components/badge';
-import { AlertCard } from '@/components/alert-card';
-import type { Alert, Contract } from '@/types';
+import type { Contract } from '@/types';
 import styles from './contract-page.module.css';
 
 export interface ContractPageProps {
@@ -35,19 +34,14 @@ function DetailRow({ label, children }: { label: string; children: React.ReactNo
  */
 export function ContractPage({ contractId }: ContractPageProps) {
   const [contract, setContract] = useState<Contract | null>(null);
-  const [alerts, setAlerts] = useState<Alert[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setLoading(true);
-    Promise.all([
-      fetchContract(contractId),
-      fetchAlertsForContract(contractId),
-    ])
-      .then(([contractData, alertsData]) => {
+    fetchContract(contractId)
+      .then((contractData) => {
         setContract(contractData);
-        setAlerts(alertsData);
       })
       .catch((err: unknown) => {
         setError(err instanceof Error ? err.message : 'Error al cargar el contrato.');
@@ -187,19 +181,6 @@ export function ContractPage({ contractId }: ContractPageProps) {
           </dl>
         </section>
 
-        {/* Related alerts */}
-        {alerts.length > 0 && (
-          <section className={styles.alerts} aria-labelledby="alerts-heading">
-            <h2 id="alerts-heading" className={styles.section__title}>
-              Alertas asociadas ({alerts.length})
-            </h2>
-            <div className={styles.alerts__grid}>
-              {alerts.map((alert) => (
-                <AlertCard key={alert.id} alert={alert} />
-              ))}
-            </div>
-          </section>
-        )}
 
         {/* Disclaimer */}
         <aside className={styles.disclaimer} role="note">

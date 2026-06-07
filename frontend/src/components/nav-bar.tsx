@@ -14,7 +14,6 @@ interface NavLink {
 const NAV_LINKS: NavLink[] = [
   { label: 'Inicio', path: '/' },
   { label: 'Explorar', path: '/explore' },
-  { label: 'Alertas', path: '/alerts' },
 ];
 
 export interface NavBarProps {

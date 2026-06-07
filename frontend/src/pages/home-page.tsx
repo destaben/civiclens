@@ -4,11 +4,10 @@
 
 import React, { useEffect, useState } from 'react';
 import { navigate } from '@/lib/router';
-import { fetchStats, fetchAlerts } from '@/lib/data';
+import { fetchStats } from '@/lib/data';
 import { formatCurrency, formatNumber } from '@/lib/format';
 import { StatsCounter } from '@/components/stats-counter';
-import { AlertCard } from '@/components/alert-card';
-import type { Alert, Stats } from '@/types';
+import type { Stats } from '@/types';
 import styles from './home-page.module.css';
 
 /**
@@ -16,16 +15,14 @@ import styles from './home-page.module.css';
  */
 export function HomePage() {
   const [stats, setStats] = useState<Stats | null>(null);
-  const [alerts, setAlerts] = useState<Alert[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setLoading(true);
-    Promise.all([fetchStats(), fetchAlerts()])
-      .then(([statsData, alertsData]) => {
+    fetchStats()
+      .then((statsData) => {
         setStats(statsData);
-        setAlerts(alertsData.slice(0, 3));
       })
       .catch((err: unknown) => {
         setError(err instanceof Error ? err.message : 'Error al cargar los datos.');
@@ -36,11 +33,6 @@ export function HomePage() {
   function handleExploreClick(e: React.MouseEvent) {
     e.preventDefault();
     navigate('/explore');
-  }
-
-  function handleAlertsClick(e: React.MouseEvent) {
-    e.preventDefault();
-    navigate('/alerts');
   }
 
   return (
@@ -65,13 +57,6 @@ export function HomePage() {
               onClick={handleExploreClick}
             >
               Explorar contratos
-            </a>
-            <a
-              href="/alerts"
-              className={`${styles.btn} ${styles['btn--secondary']}`}
-              onClick={handleAlertsClick}
-            >
-              Ver alertas
             </a>
           </div>
         </div>
@@ -110,13 +95,7 @@ export function HomePage() {
                 icon="💶"
                 accent="primary"
               />
-              <StatsCounter
-                label="Alertas abiertas"
-                value={formatNumber(stats.openAlerts)}
-                icon="⚠️"
-                accent="warning"
-                description={`${stats.alertsBySeverity.critical} críticas`}
-              />
+
               <StatsCounter
                 label="Riesgo promedio"
                 value={`${stats.avgRiskScore}/100`}
@@ -128,33 +107,6 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Recent alerts */}
-      <section className={styles.recent} aria-labelledby="recent-heading">
-        <div className="container">
-          <div className={styles.section__header}>
-            <h2 id="recent-heading" className={styles.section__title}>
-              Alertas recientes
-            </h2>
-            <a
-              href="/alerts"
-              className={styles.section__link}
-              onClick={handleAlertsClick}
-            >
-              Ver todas →
-            </a>
-          </div>
-
-          {!loading && alerts.length === 0 && (
-            <p className="text-muted">No hay alertas recientes.</p>
-          )}
-
-          <div className={styles.alerts__grid}>
-            {alerts.map((alert) => (
-              <AlertCard key={alert.id} alert={alert} />
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Disclaimer */}
       <aside className={styles.disclaimer} role="note">

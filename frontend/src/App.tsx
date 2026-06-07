@@ -10,7 +10,6 @@ import { route, setNotFound, startRouter, navigate } from '@/lib/router';
 import { NavBar } from '@/components/nav-bar';
 import { HomePage } from '@/pages/home-page';
 import { ExplorePage } from '@/pages/explore-page';
-import { AlertsPage } from '@/pages/alerts-page';
 import { ContractPage } from '@/pages/contract-page';
 import { OrgPage } from '@/pages/org-page';
 
@@ -18,7 +17,6 @@ import { OrgPage } from '@/pages/org-page';
 type PageState =
   | { page: 'home' }
   | { page: 'explore' }
-  | { page: 'alerts' }
   | { page: 'contract'; contractId: string }
   | { page: 'org'; orgId: string }
   | { page: 'not-found' };
@@ -38,7 +36,6 @@ export function App() {
   useEffect(() => {
     route('/', () => updatePath({ page: 'home' }));
     route('/explore', () => updatePath({ page: 'explore' }));
-    route('/alerts', () => updatePath({ page: 'alerts' }));
     route('/contract/:id', (params) =>
       updatePath({ page: 'contract', contractId: params.id ?? '' }),
     );
@@ -55,8 +52,6 @@ export function App() {
         return <HomePage />;
       case 'explore':
         return <ExplorePage />;
-      case 'alerts':
-        return <AlertsPage />;
       case 'contract':
         return <ContractPage contractId={pageState.contractId} />;
       case 'org':

@@ -5,7 +5,7 @@
  * Each helper returns a typed Promise and throws on non-OK HTTP responses.
  */
 
-import type { Alert, Contract, Organization, Stats } from '@/types';
+import type { Contract, Organization, Stats } from '@/types';
 
 const BASE = '/data';
 
@@ -32,19 +32,6 @@ export async function fetchContracts(): Promise<Contract[]> {
 export async function fetchContract(id: string): Promise<Contract | null> {
   const contracts = await fetchContracts();
   return contracts.find((c) => c.id === id) ?? null;
-}
-
-/** Fetch all alerts. */
-export async function fetchAlerts(): Promise<Alert[]> {
-  return fetchJson<Alert[]>('alerts.json');
-}
-
-/** Fetch alerts for a specific contract. */
-export async function fetchAlertsForContract(
-  contractId: string,
-): Promise<Alert[]> {
-  const alerts = await fetchAlerts();
-  return alerts.filter((a) => a.contractId === contractId);
 }
 
 /** Fetch all organisations. */
