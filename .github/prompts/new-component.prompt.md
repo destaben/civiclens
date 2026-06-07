@@ -8,7 +8,7 @@ Create a new React component following CivicLens frontend conventions:
 2. Use a named export (not default export)
 3. Define a TypeScript interface for props
 4. Use Tailwind CSS for styling with shadcn/ui primitives
-5. Handle loading and error states explicitly
+5. Handle loading and error states explicitly. The template above is a minimal baseline; when generating an actual component that fetches data or performs fallible operations, always add loading and error props with explicit conditional rendering before the main JSX. If the component is purely presentational and has no async data or fallible operations, you may omit loading and error states — note this omission in the JSDoc comment.
 6. Add JSDoc comment describing the component's purpose
 
 Template:
@@ -31,4 +31,6 @@ export function MyComponent({ title, className }: MyComponentProps) {
 }
 ```
 
-If the component needs client-side interactivity, add `"use client"` at the top. Prefer React Server Components by default.
+If the component needs client-side interactivity, add `"use client"` as the literal first line of the file, before all imports and before any JSDoc comment. Prefer React Server Components by default.
+
+If the component displays anomaly flags, risk scores, or any output from the Legal Context Agent, it **must** render the informational disclaimer using `t('disclaimer')` from the active locale. Never omit or paraphrase the disclaimer text.
