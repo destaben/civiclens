@@ -194,7 +194,8 @@ civiclens/
 │   └── vite.config.ts
 ├── infra/             # Infrastructure as code
 ├── docs/              # Extended documentation
-│   └── i18n-guidelines.md  # Internationalization rules
+│   ├── i18n-guidelines.md      # Internationalization rules
+│   └── data-sources-spain.md   # Spanish transparency data sources & legal framework
 └── .github/           # CI/CD, Copilot config, prompts
 ```
 
