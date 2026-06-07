@@ -1,18 +1,19 @@
 # CivicLens
 
-**AI-powered transparency for government regulatory processes.**
+**AI-powered transparency for public procurement.**
 
-CivicLens makes federal regulations and public comments accessible to everyone. It ingests data from sources like regulations.gov, uses large language models to generate plain-language summaries, and presents insights through an intuitive web interface.
+CivicLens monitors government contracts and public spending to detect corruption risks. It ingests data from sources like PLACSP, TED, and DatosGob, uses large language models to score risk and generate summaries, and presents insights through an intuitive bilingual web interface (English & Spanish).
 
 ---
 
 ## Features
 
-- 📜 **Regulation Tracking** — Browse and search federal regulations with AI-generated summaries
-- 💬 **Comment Analysis** — Understand public sentiment through aggregated comment insights
-- 🤖 **AI Summaries** — Complex legal language translated into plain English and Spanish
-- 🔍 **Search & Filter** — Find regulations by agency, topic, status, and more
-- 📊 **Analytics Dashboard** — Visualize trends in regulatory activity
+- 📜 **Contract Monitoring** — Browse and search public procurement contracts with AI-generated risk analysis
+- ⚠️ **Risk Alerts** — Receive alerts on suspicious patterns in government spending
+- 🤖 **AI Summaries** — Complex procurement data translated into plain language (English & Spanish)
+- 🔍 **Search & Filter** — Find contracts by agency, amount, risk score, and more
+- 📊 **Analytics Dashboard** — Visualize trends in public procurement activity
+- 🏛️ **Organization Profiles** — Track government bodies at national, regional, and local levels
 - 🌐 **Bilingual (EN/ES)** — Full English and Spanish support throughout the interface
 
 ## Architecture

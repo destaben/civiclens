@@ -34,9 +34,9 @@ applyTo: "frontend/**/*.{ts,tsx}"
 ## Internationalization (i18n)
 - The application MUST support English (`en`) and Spanish (`es`) with English as the default locale
 - Use `next-intl` as the translation library (compatible with App Router)
-- Use `[locale]` dynamic segment in the App Router for locale-based routing (e.g., `/en/regulations`, `/es/regulations`)
+- Use `[locale]` dynamic segment in the App Router for locale-based routing (e.g., `/en/contracts`, `/es/contracts`)
 - Store all user-facing strings in JSON translation files under `frontend/messages/` (`en.json`, `es.json`)
-- Organize translation keys by feature/page (e.g., `common`, `regulations`, `comments`, `dashboard`)
+- Organize translation keys by feature/page (e.g., `common`, `contracts`, `alerts`, `organizations`, `dashboard`)
 - Never hardcode user-facing strings in components — always use the `useTranslations()` hook
 - Include a `LanguageSwitcher` component in the main navigation/header
 - Persist the user's language preference via cookie

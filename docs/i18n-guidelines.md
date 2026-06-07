@@ -41,7 +41,7 @@ frontend/
 │   │   └── [locale]/        # All pages nested under locale segment
 │   │       ├── layout.tsx   # Wraps children with NextIntlClientProvider
 │   │       ├── page.tsx     # Homepage
-│   │       └── regulations/
+│   │       └── contracts/
 │   │           └── page.tsx
 │   └── components/
 │       └── language-switcher.tsx
@@ -65,18 +65,34 @@ Translation files use nested JSON organized by feature:
   },
   "nav": {
     "home": "Home",
-    "regulations": "Regulations",
-    "comments": "Comments",
+    "contracts": "Contracts",
+    "alerts": "Alerts",
+    "organizations": "Organizations",
     "dashboard": "Dashboard"
   },
   "home": {
-    "title": "AI-powered transparency for government regulations",
-    "subtitle": "Making federal regulations accessible to everyone"
+    "title": "AI-powered transparency for public procurement",
+    "subtitle": "Monitoring government contracts to prevent corruption"
   },
-  "regulations": {
-    "title": "Regulations",
+  "contracts": {
+    "title": "Contracts",
     "filter": "Filter",
-    "noResults": "No regulations found"
+    "noResults": "No contracts found",
+    "riskScore": "Risk Score",
+    "amount": "Amount",
+    "agency": "Agency"
+  },
+  "alerts": {
+    "title": "Risk Alerts",
+    "noAlerts": "No active alerts",
+    "severity": "Severity"
+  },
+  "organizations": {
+    "title": "Organizations",
+    "level": "Level",
+    "national": "National",
+    "regional": "Regional",
+    "local": "Local"
   }
 }
 ```
@@ -92,18 +108,34 @@ Translation files use nested JSON organized by feature:
   },
   "nav": {
     "home": "Inicio",
-    "regulations": "Regulaciones",
-    "comments": "Comentarios",
+    "contracts": "Contratos",
+    "alerts": "Alertas",
+    "organizations": "Organizaciones",
     "dashboard": "Panel"
   },
   "home": {
-    "title": "Transparencia impulsada por IA para regulaciones gubernamentales",
-    "subtitle": "Haciendo las regulaciones federales accesibles para todos"
+    "title": "Transparencia impulsada por IA para la contratación pública",
+    "subtitle": "Monitorizando contratos gubernamentales para prevenir la corrupción"
   },
-  "regulations": {
-    "title": "Regulaciones",
+  "contracts": {
+    "title": "Contratos",
     "filter": "Filtrar",
-    "noResults": "No se encontraron regulaciones"
+    "noResults": "No se encontraron contratos",
+    "riskScore": "Puntuación de riesgo",
+    "amount": "Importe",
+    "agency": "Organismo"
+  },
+  "alerts": {
+    "title": "Alertas de riesgo",
+    "noAlerts": "No hay alertas activas",
+    "severity": "Gravedad"
+  },
+  "organizations": {
+    "title": "Organizaciones",
+    "level": "Nivel",
+    "national": "Nacional",
+    "regional": "Autonómico",
+    "local": "Local"
   }
 }
 ```
@@ -118,8 +150,8 @@ Translation files use nested JSON organized by feature:
    ```tsx
    import { useTranslations } from 'next-intl';
 
-   export function RegulationList() {
-     const t = useTranslations('regulations');
+   export function ContractList() {
+     const t = useTranslations('contracts');
      return <h1>{t('title')}</h1>;
    }
    ```
@@ -138,7 +170,7 @@ Translation files use nested JSON organized by feature:
 5. **Use locale-aware navigation helpers** from `src/i18n/navigation.ts` (wrapping `next-intl/navigation`):
    ```tsx
    import { Link } from '@/i18n/navigation';
-   <Link href="/regulations">...</Link>
+   <Link href="/contracts">...</Link>
    ```
 
 6. **Middleware** should detect locale from URL, cookie, or `Accept-Language` header and redirect accordingly.
@@ -147,7 +179,7 @@ Translation files use nested JSON organized by feature:
 
 7. When adding any new user-facing string:
    - Add the key to **both** `en.json` and `es.json`
-   - Use a descriptive, dot-separated key path (e.g., `regulations.detailPage.commentCount`)
+   - Use a descriptive, dot-separated key path (e.g., `contracts.detailPage.riskScore`)
    - Keep keys in English for consistency
 
 ### Date & Number Formatting
@@ -163,7 +195,7 @@ Translation files use nested JSON organized by feature:
 
 9. Pass the user's active locale to backend API calls so AI-generated summaries and analyses are returned in the correct language:
    ```tsx
-   fetch(`/api/regulations/${id}/summary?locale=${locale}`)
+   fetch(`/api/contracts/${id}/summary?locale=${locale}`)
    ```
 
 10. The backend AI pipeline should include the target language in its LLM prompt.
