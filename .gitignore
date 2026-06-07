@@ -1,0 +1,90 @@
+# ==========================
+# Python
+# ==========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.whl
+.venv/
+venv/
+env/
+.python-version
+pip-log.txt
+pip-delete-this-directory.txt
+*.manifest
+*.spec
+
+# ==========================
+# TypeScript / JavaScript
+# ==========================
+node_modules/
+dist/
+build/
+*.tsbuildinfo
+.next/
+out/
+coverage/
+*.js.map
+
+# ==========================
+# Environment & Secrets
+# ==========================
+.env
+.env.local
+.env.*.local
+.env.production
+.env.staging
+
+# ==========================
+# IDE & Editor
+# ==========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ==========================
+# Testing & Coverage
+# ==========================
+htmlcov/
+.coverage
+.coverage.*
+.nox/
+.tox/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+junit*.xml
+
+# ==========================
+# Docker
+# ==========================
+docker-compose.override.yml
+
+# ==========================
+# Terraform / Infrastructure
+# ==========================
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+!*.tfvars.example
+
+# ==========================
+# Misc
+# ==========================
+*.log
+*.pid
+*.seed
+tmp/
+temp/
+.cache/
