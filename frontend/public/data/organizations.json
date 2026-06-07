@@ -1,0 +1,68 @@
+[
+  {
+    "id": "ORG-001",
+    "name": "Ministerio de Sanidad",
+    "level": "national",
+    "type": "ministry",
+    "contractCount": 312,
+    "totalSpend": 48500000,
+    "avgRiskScore": 41,
+    "openAlerts": 8,
+    "description": "Órgano central de la Administración General del Estado responsable de la propuesta y ejecución de las políticas de gobierno en materia de salud."
+  },
+  {
+    "id": "ORG-002",
+    "name": "Ayuntamiento de Madrid",
+    "level": "local",
+    "type": "municipality",
+    "contractCount": 1247,
+    "totalSpend": 215000000,
+    "avgRiskScore": 36,
+    "openAlerts": 22,
+    "description": "Administración local del municipio de Madrid, capital del Estado español, con competencias en urbanismo, servicios sociales, movilidad y más."
+  },
+  {
+    "id": "ORG-003",
+    "name": "Agencia Tributaria",
+    "level": "national",
+    "type": "agency",
+    "contractCount": 178,
+    "totalSpend": 32100000,
+    "avgRiskScore": 55,
+    "openAlerts": 14,
+    "description": "Agencia Estatal de Administración Tributaria, responsable de la aplicación efectiva del sistema tributario estatal y aduanero."
+  },
+  {
+    "id": "ORG-004",
+    "name": "Ayuntamiento de Barcelona",
+    "level": "local",
+    "type": "municipality",
+    "contractCount": 984,
+    "totalSpend": 178000000,
+    "avgRiskScore": 29,
+    "openAlerts": 11,
+    "description": "Administración local del municipio de Barcelona, con amplia experiencia en contratación pública transparente y criterios de sostenibilidad."
+  },
+  {
+    "id": "ORG-005",
+    "name": "Consejería de Deportes de Andalucía",
+    "level": "regional",
+    "type": "regional-department",
+    "contractCount": 423,
+    "totalSpend": 67000000,
+    "avgRiskScore": 48,
+    "openAlerts": 9,
+    "description": "Departamento de la Junta de Andalucía responsable de la planificación y gestión de las políticas deportivas en la comunidad autónoma."
+  },
+  {
+    "id": "ORG-006",
+    "name": "Ministerio de Justicia",
+    "level": "national",
+    "type": "ministry",
+    "contractCount": 245,
+    "totalSpend": 41200000,
+    "avgRiskScore": 52,
+    "openAlerts": 18,
+    "description": "Ministerio responsable de la propuesta y ejecución de la política del Gobierno en materia de justicia, registros civiles y notarías."
+  }
+]

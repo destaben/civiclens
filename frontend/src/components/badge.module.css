@@ -1,0 +1,113 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  white-space: nowrap;
+  border: var(--border-width) solid transparent;
+}
+
+/* Default */
+.badge--default {
+  background-color: var(--color-bg-muted);
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+}
+
+/* Info */
+.badge--info {
+  background-color: var(--color-info-bg);
+  color: var(--color-info);
+  border-color: var(--color-info-border);
+}
+
+/* Severity */
+.badge--critical {
+  background-color: var(--color-critical-bg);
+  color: var(--color-critical);
+  border-color: var(--color-critical-border);
+}
+
+.badge--high {
+  background-color: var(--color-high-bg);
+  color: var(--color-high);
+  border-color: var(--color-high-border);
+}
+
+.badge--medium {
+  background-color: var(--color-medium-bg);
+  color: var(--color-medium);
+  border-color: var(--color-medium-border);
+}
+
+.badge--low {
+  background-color: var(--color-low-bg);
+  color: var(--color-low);
+  border-color: var(--color-low-border);
+}
+
+/* Contract status */
+.badge--active {
+  background-color: var(--color-low-bg);
+  color: var(--color-success);
+  border-color: var(--color-low-border);
+}
+
+.badge--awarded {
+  background-color: var(--color-info-bg);
+  color: var(--color-info);
+  border-color: var(--color-info-border);
+}
+
+.badge--cancelled {
+  background-color: var(--color-bg-muted);
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+}
+
+/* Org level */
+.badge--national {
+  background-color: var(--color-primary-50);
+  color: var(--color-primary-700);
+  border-color: var(--color-primary-200);
+}
+
+.badge--regional {
+  background-color: var(--color-medium-bg);
+  color: var(--color-medium);
+  border-color: var(--color-medium-border);
+}
+
+.badge--local {
+  background-color: var(--color-low-bg);
+  color: var(--color-success);
+  border-color: var(--color-low-border);
+}
+
+/* Anomaly types */
+.badge--split-contract {
+  background-color: var(--color-high-bg);
+  color: var(--color-high);
+  border-color: var(--color-high-border);
+}
+
+.badge--short-tender-window {
+  background-color: var(--color-medium-bg);
+  color: var(--color-medium);
+  border-color: var(--color-medium-border);
+}
+
+.badge--anomalous-pricing {
+  background-color: var(--color-medium-bg);
+  color: var(--color-medium);
+  border-color: var(--color-medium-border);
+}
+
+.badge--sole-source {
+  background-color: var(--color-critical-bg);
+  color: var(--color-critical);
+  border-color: var(--color-critical-border);
+}

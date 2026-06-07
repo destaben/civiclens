@@ -1,0 +1,133 @@
+.page {
+  padding: var(--space-8) 0 var(--space-16);
+}
+
+.header {
+  margin-bottom: var(--space-6);
+}
+
+.title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+}
+
+/* ─── Filters ─────────────────────────────────────────────────── */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+  padding: var(--space-4);
+  background-color: var(--color-bg-card);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius-xl);
+}
+
+.filters__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  flex: 1;
+  min-width: 200px;
+}
+
+.label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.input,
+.select {
+  padding: var(--space-2) var(--space-3);
+  border: var(--border-width) solid var(--color-border-strong);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  background-color: var(--color-bg-card);
+  transition: border-color var(--transition-fast);
+}
+
+.input:focus,
+.select:focus {
+  outline: var(--border-width-2) solid var(--color-primary-500);
+  outline-offset: 1px;
+  border-color: var(--color-primary-500);
+}
+
+.range {
+  cursor: pointer;
+  accent-color: var(--color-primary-600);
+}
+
+/* ─── Table cell helpers ────────────────────────────────────────── */
+.id {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.title {
+  font-weight: var(--font-weight-medium);
+  max-width: 20rem;
+}
+
+.col--amount {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.col--center {
+  text-align: center;
+}
+
+.anomalies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+/* ─── Legend ────────────────────────────────────────────────────── */
+.legend {
+  margin-top: var(--space-6);
+  padding: var(--space-4);
+  background-color: var(--color-bg-muted);
+  border-radius: var(--border-radius-lg);
+}
+
+.legend__title {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-2);
+}
+
+.legend__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+}
+
+/* ─── States ─────────────────────────────────────────────────────── */
+.loading {
+  color: var(--color-text-muted);
+  font-style: italic;
+  padding: var(--space-8);
+  text-align: center;
+}
+
+.error {
+  color: var(--color-error);
+  background-color: var(--color-error-bg);
+  border: var(--border-width) solid var(--color-critical-border);
+  border-radius: var(--border-radius-md);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-4);
+}

@@ -1,0 +1,183 @@
+.page {
+  padding: var(--space-8) 0 var(--space-16);
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-6);
+}
+
+.back {
+  color: var(--color-link);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+}
+
+.back:hover {
+  text-decoration: underline;
+}
+
+/* ─── Header ──────────────────────────────────────────────────── */
+.header {
+  margin-bottom: var(--space-8);
+}
+
+.header__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  line-height: var(--line-height-snug);
+  margin-bottom: var(--space-2);
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: var(--font-size-3xl);
+  }
+}
+
+.entity {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-muted);
+}
+
+/* ─── Sections ────────────────────────────────────────────────── */
+.section__title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-2);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+/* ─── Summary ─────────────────────────────────────────────────── */
+.summary {
+  margin-bottom: var(--space-8);
+  padding: var(--space-5);
+  background-color: var(--color-bg-muted);
+  border-radius: var(--border-radius-xl);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.summary__text {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text);
+}
+
+/* ─── Details ─────────────────────────────────────────────────── */
+.details {
+  margin-bottom: var(--space-8);
+}
+
+.details__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-1);
+  background-color: var(--color-bg-card);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius-xl);
+  overflow: hidden;
+}
+
+@media (min-width: 640px) {
+  .details__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.detail {
+  padding: var(--space-4);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.detail:last-child {
+  border-bottom: none;
+}
+
+.detail__label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-1);
+}
+
+.detail__value {
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  font-weight: var(--font-weight-medium);
+}
+
+.anomalies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+/* ─── Alerts ──────────────────────────────────────────────────── */
+.alerts {
+  margin-bottom: var(--space-8);
+}
+
+.alerts__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .alerts__grid {
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  }
+}
+
+/* ─── Disclaimer ────────────────────────────────────────────────── */
+.disclaimer {
+  background-color: var(--color-medium-bg);
+  border: var(--border-width) solid var(--color-medium-border);
+  border-radius: var(--border-radius-md);
+  padding: var(--space-3) var(--space-4);
+}
+
+.disclaimer p {
+  font-size: var(--font-size-sm);
+  color: var(--color-medium);
+  line-height: var(--line-height-relaxed);
+}
+
+/* ─── States ─────────────────────────────────────────────────────── */
+.loading {
+  color: var(--color-text-muted);
+  font-style: italic;
+  padding: var(--space-8);
+  text-align: center;
+}
+
+.error {
+  color: var(--color-error);
+  background-color: var(--color-error-bg);
+  border: var(--border-width) solid var(--color-critical-border);
+  border-radius: var(--border-radius-md);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.notFound {
+  color: var(--color-text-muted);
+  padding: var(--space-8);
+  text-align: center;
+}
