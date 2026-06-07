@@ -32,6 +32,9 @@ export function NavBar({ currentPath }: NavBarProps) {
 
   return (
     <header className={styles.header}>
+      <p className={styles.notice} role="status" aria-live="polite">
+        Sitio en construccion: toda la informacion mostrada es ficticia y solo para demostracion.
+      </p>
       <nav className={`${styles.nav} container`} aria-label="Navegación principal">
         <a
           href="/"
@@ -56,10 +59,6 @@ export function NavBar({ currentPath }: NavBarProps) {
             </li>
           ))}
         </ul>
-
-        <p className={styles.disclaimer} aria-label="Descargo de responsabilidad">
-          Solo informativo · No constituye acusación legal
-        </p>
       </nav>
     </header>
   );
