@@ -10,9 +10,10 @@ CivicLens makes federal regulations and public comments accessible to everyone. 
 
 - 📜 **Regulation Tracking** — Browse and search federal regulations with AI-generated summaries
 - 💬 **Comment Analysis** — Understand public sentiment through aggregated comment insights
-- 🤖 **AI Summaries** — Complex legal language translated into plain English
+- 🤖 **AI Summaries** — Complex legal language translated into plain English and Spanish
 - 🔍 **Search & Filter** — Find regulations by agency, topic, status, and more
 - 📊 **Analytics Dashboard** — Visualize trends in regulatory activity
+- 🌐 **Bilingual (EN/ES)** — Full English and Spanish support throughout the interface
 
 ## Architecture
 
@@ -116,6 +117,7 @@ civiclens/
 │       └── types/
 ├── infra/             # Infrastructure as code
 ├── docs/              # Extended documentation
+│   └── i18n-guidelines.md  # Internationalization rules
 └── .github/           # CI/CD, Copilot config, prompts
 ```
 
