@@ -7,7 +7,7 @@ applyTo: "frontend/**/*.{ts,tsx}"
 ## Style & Formatting
 - Enforce with ESLint + Prettier
 - Use strict TypeScript (`strict: true` in tsconfig)
-- Use `kebab-case` for filenames (e.g., `regulation-card.tsx`)
+- Use `kebab-case` for filenames (e.g., `contract-card.tsx`)
 - Use `PascalCase` for components and types, `camelCase` for variables/functions
 
 ## Components

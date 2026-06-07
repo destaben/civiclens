@@ -19,16 +19,16 @@ Create a new API endpoint following CivicLens conventions:
 Example structure:
 ```python
 @router.post(
-    "/regulations/{regulation_id}/comments",
+    "/contracts/{contract_id}/comments",
     response_model=CommentResponse,
     status_code=status.HTTP_201_CREATED,
 )
 async def create_comment(
-    regulation_id: str,
+    contract_id: str,
     payload: CommentCreate,
     db: AsyncSession = Depends(get_db),
     user: User = Depends(get_current_user),
 ) -> CommentResponse:
-    """Create a new public comment on a regulation."""
-    return await comment_service.create(db, regulation_id, payload, user)
+    """Create a new public comment on a contract."""
+    return await comment_service.create(db, contract_id, payload, user)
 ```

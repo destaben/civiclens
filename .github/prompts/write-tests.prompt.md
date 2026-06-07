@@ -25,9 +25,9 @@ async def client():
 
 
 @pytest.mark.asyncio
-async def test_list_regulations_returns_paginated_results(client: AsyncClient):
-    """Listing regulations should return paginated results."""
-    response = await client.get("/api/v1/regulations?page=1&size=10")
+async def test_list_contracts_returns_paginated_results(client: AsyncClient):
+    """Listing contracts should return paginated results."""
+    response = await client.get("/api/v1/contracts?page=1&size=10")
     assert response.status_code == 200
     data = response.json()
     assert "items" in data
@@ -43,12 +43,12 @@ async def test_list_regulations_returns_paginated_results(client: AsyncClient):
 ```typescript
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
-import { RegulationCard } from "./regulation-card";
+import { ContractCard } from "./contract-card";
 
-describe("RegulationCard", () => {
+describe("ContractCard", () => {
   it("renders the title and summary", () => {
-    render(<RegulationCard id="1" title="Clean Air Act" summary="A summary" />);
-    expect(screen.getByText("Clean Air Act")).toBeInTheDocument();
+    render(<ContractCard id="1" title="Office Supplies Tender 2024" summary="A summary" />);
+    expect(screen.getByText("Office Supplies Tender 2024")).toBeInTheDocument();
     expect(screen.getByText("A summary")).toBeInTheDocument();
   });
 });

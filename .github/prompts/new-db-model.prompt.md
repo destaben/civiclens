@@ -20,10 +20,10 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.models.base import Base
 
 
-class Regulation(Base):
-    """A federal regulation tracked by CivicLens."""
+class Contract(Base):
+    """A public procurement contract tracked by CivicLens."""
 
-    __tablename__ = "regulations"
+    __tablename__ = "contracts"
 
     id: Mapped[str] = mapped_column(String(64), primary_key=True)
     title: Mapped[str] = mapped_column(String(512), nullable=False)
@@ -35,12 +35,12 @@ class Regulation(Base):
         DateTime(timezone=True), server_default="now()"
     )
 
-    comments: Mapped[list["Comment"]] = relationship(back_populates="regulation")
+    comments: Mapped[list["Comment"]] = relationship(back_populates="contract")
 ```
 
 Then generate migration:
 ```bash
 cd backend
-alembic revision --autogenerate -m "add regulations table"
+alembic revision --autogenerate -m "add contracts table"
 alembic upgrade head
 ```

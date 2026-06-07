@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-CivicLens is a civic technology platform that uses AI to make government regulatory processes more transparent and accessible. The system ingests federal regulations and public comments, summarizes them with LLMs, and presents them through an intuitive web interface.
+CivicLens is a civic technology platform that uses AI to make public procurement more transparent and accessible. The system ingests government contracts and public spending data, scores risk and generates summaries with LLMs, and presents insights through an intuitive bilingual web interface.
 
 ## Architecture
 
@@ -47,11 +47,11 @@ from app.core.deps import get_current_user
 from app.models.user import User
 
 
-class RegulationResponse(BaseModel):
-    """Response schema for a single regulation."""
+class ContractResponse(BaseModel):
+    """Response schema for a single contract."""
 
-    id: str = Field(..., description="Unique regulation identifier")
-    title: str = Field(..., description="Regulation title")
+    id: str = Field(..., description="Unique contract identifier")
+    title: str = Field(..., description="Contract title")
     summary: Optional[str] = Field(None, description="AI-generated summary")
 ```
 
@@ -61,18 +61,18 @@ class RegulationResponse(BaseModel):
 - **Components**: Functional components with named exports
 - **State**: React Server Components by default; client components only when needed
 - **Naming**: `camelCase` for variables/functions, `PascalCase` for components/types
-- **Files**: `kebab-case` for filenames (e.g., `regulation-card.tsx`)
+- **Files**: `kebab-case` for filenames (e.g., `contract-card.tsx`)
 - **Imports**: Use path aliases (`@/components`, `@/lib`)
 - **Error handling**: Use Error Boundaries; handle loading/error states explicitly
 
 ```typescript
-interface RegulationCardProps {
+interface ContractCardProps {
   id: string;
   title: string;
   summary: string | null;
 }
 
-export function RegulationCard({ id, title, summary }: RegulationCardProps) {
+export function ContractCard({ id, title, summary }: ContractCardProps) {
   return (
     <article className="rounded-lg border p-4 shadow-sm">
       <h3 className="text-lg font-semibold">{title}</h3>
@@ -139,6 +139,6 @@ civiclens/
 ## Git Workflow
 
 - Branch naming: `feature/description`, `fix/description`, `chore/description`
-- Commit format: `type(scope): short description` (e.g., `feat(api): add regulation search endpoint`)
+- Commit format: `type(scope): short description` (e.g., `feat(api): add contract search endpoint`)
 - PR descriptions should reference the issue number
 - Keep PRs small and focused on a single concern

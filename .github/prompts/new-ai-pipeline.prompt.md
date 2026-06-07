@@ -26,24 +26,24 @@ from app.core.cache import cache_result
 class SummaryOutput(BaseModel):
     """Structured output from the summarization pipeline."""
 
-    summary: str = Field(..., description="Concise summary of the regulation")
+    summary: str = Field(..., description="Concise summary of the contract")
     key_points: list[str] = Field(default_factory=list, description="Key takeaways")
-    sentiment: str = Field(..., description="Overall public sentiment")
+    risk_score: str = Field(..., description="Overall risk assessment")
 
 
 @cache_result(ttl=3600)
-async def summarize_regulation(content: str) -> SummaryOutput:
-    """Summarize a regulation document using an LLM.
+async def summarize_contract(content: str) -> SummaryOutput:
+    """Summarize a contract document using an LLM.
 
     Args:
-        content: The full text of the regulation.
+        content: The full text of the contract.
 
     Returns:
-        Structured summary with key points and sentiment.
+        Structured summary with key points and risk score.
     """
     client = get_llm_client(model="gpt-4o-mini")
     response = await client.generate_structured(
-        prompt=f"Summarize this regulation for a general audience:\n\n{content}",
+        prompt=f"Summarize this government contract for a general audience:\n\n{content}",
         output_schema=SummaryOutput,
         max_tokens=1024,
     )

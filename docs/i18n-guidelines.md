@@ -173,13 +173,13 @@ Translation files use nested JSON organized by feature:
    <Link href="/contracts">...</Link>
    ```
 
-6. **Middleware** should detect locale from URL, cookie, or `Accept-Language` header and redirect accordingly.
+6. **Middleware** should detect locale from URL, cookie, or `Accept-Language` header and redirect accordingly. Note: Next.js Middleware requires a Node/Edge runtime and will **not** run on a purely static GitHub Pages deployment. For static export, use build-time generation with explicit `/en`/`/es` route segments instead of runtime middleware redirects.
 
 ### Adding New Text
 
 7. When adding any new user-facing string:
    - Add the key to **both** `en.json` and `es.json`
-   - Use a descriptive, dot-separated key path (e.g., `contracts.detailPage.riskScore`)
+   - Use a descriptive, dot-separated key path relative to the namespace (e.g., `detailPage.riskScore` under the `contracts` namespace)
    - Keep keys in English for consistency
 
 ### Date & Number Formatting

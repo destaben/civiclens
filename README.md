@@ -46,6 +46,8 @@ Frontend (Next.js)  →  Backend API (FastAPI)  →  PostgreSQL
 
 ### Setup
 
+> **Note:** The `backend/` and `frontend/` directories are not scaffolded yet. The commands below reflect the intended setup once they are in place.
+
 ```bash
 # Clone the repository
 git clone https://github.com/destaben/civiclens.git
@@ -55,47 +57,49 @@ cd civiclens
 cp .env.example .env
 # Edit .env with your API keys and configuration
 
-# Start all services with Docker
-docker compose up -d
+# Start all services with Docker (planned)
+# docker compose up -d
 
-# --- OR set up locally ---
+# --- OR set up locally (planned) ---
 
-# Backend
-cd backend
-python -m venv .venv
-source .venv/bin/activate
-pip install -e ".[dev]"
-uvicorn app.main:app --reload
+# Backend (once backend/ is scaffolded)
+# cd backend
+# python -m venv .venv
+# source .venv/bin/activate
+# pip install -e ".[dev]"
+# uvicorn app.main:app --reload
 
-# Frontend
-cd frontend
-npm install
-npm run dev
+# Frontend (once frontend/ is scaffolded)
+# cd frontend
+# npm install
+# npm run dev
 ```
 
 ### Running Tests
 
-```bash
-# Backend tests
-cd backend
-pytest
+> **Note:** Test commands will be available once the `backend/` and `frontend/` directories are scaffolded.
 
-# Frontend tests
-cd frontend
-npm test
+```bash
+# Backend tests (planned)
+# cd backend
+# pytest
+
+# Frontend tests (planned)
+# cd frontend
+# npm test
 ```
 
 ### Deployment
 
-The frontend is deployed as a static site to **GitHub Pages** using Next.js static export (`output: 'export'`). A GitHub Actions workflow builds and deploys on push to `main`.
+> **Planned:** The frontend will be deployed as a static site to **GitHub Pages** using Next.js static export (`output: 'export'`). A GitHub Actions workflow will build and deploy on push to `main`. The `frontend/` directory and the workflow file do not exist yet.
 
 ```bash
-# Build static export locally
-cd frontend
-npm run build   # outputs to frontend/out/
+# Build static export locally (planned, once frontend/ is scaffolded)
+# cd frontend
+# npm run build   # outputs to frontend/out/
 ```
 
-The backend API is deployed separately via Docker.
+The backend API will be deployed separately via Docker.
 
 ## Project Structure
 
@@ -145,4 +149,4 @@ civiclens/
 
 ## License
 
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+This project is licensed under the MIT License. A `LICENSE` file will be added to the repository.
